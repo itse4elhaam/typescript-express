@@ -1,0 +1,13 @@
+node_modules
+
+.next
+
+*.env
+
+yarn-error.log
+
+*.yml
+
+*.config
+
+*.md
