@@ -1,6 +1,6 @@
 import morgan from "morgan";
 import colors from "colors"; // Import colors library
-import { REQ_COLORS } from "../lib/constants";
+import { MAX_BODY_LENGTH_MORGAN_LOGS, REQ_COLORS } from "../lib/constants";
 import { Request } from "express";
 import { HttpVerbs } from "../lib/types";
 
@@ -26,7 +26,7 @@ morgan.token("colored-status", (req: Request, res) => {
       : status >= 300
       ? "cyan"
       : "green";
-  return colors[color](status.toString()); 
+  return colors[color](status.toString());
 });
 
 morgan.token("colored-method", (req, res) => {
@@ -34,7 +34,7 @@ morgan.token("colored-method", (req, res) => {
   const color: string = REQ_COLORS[method];
   // this is temporary
   // @ts-expect-error
-  return colors[color](method.toString()); 
+  return colors[color](method.toString());
 });
 
 const morganMiddleware = morgan(
@@ -48,7 +48,10 @@ const morganMiddleware = morgan(
     const query = tokens.query(req, res);
     const body = tokens.body(req, res);
 
-    return `\n${method} ${url} ${status} ${contentLength} - ${responseTime} ms: \n- Params: ${params} \n- Query: ${query} \n- Body: ${body}\n`;
+    // sliced the body to limit it because requests can have big bodies taking up the whole log screen
+    return `\n${method} ${url} ${status} ${contentLength} - ${responseTime} ms: \n- Params: ${params} \n- Query: ${query} \n- Body: ${
+      body && body.slice(0, MAX_BODY_LENGTH_MORGAN_LOGS)
+    }...\n`;
   },
   {
     // Stream for morgan logs (you can customize this as needed)
