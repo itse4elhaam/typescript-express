@@ -1,8 +1,8 @@
 import morgan from "morgan";
-import colors from "colors"; // Import colors library
-import { MAX_BODY_LENGTH_MORGAN_LOGS, REQ_COLORS } from "../lib/constants";
+import colors from "colors";
+import { MAX_BODY_LENGTH_MORGAN_LOGS, REQ_COLORS } from "@/lib/constants";
 import { Request } from "express";
-import { HttpVerbs } from "../lib/types";
+import { HttpVerbs } from "@/lib/types";
 
 morgan.token("params", (req: Request, res) => {
   return JSON.stringify(req.params);
@@ -22,17 +22,16 @@ morgan.token("colored-status", (req: Request, res) => {
     status >= 500
       ? "red"
       : status >= 400
-      ? "yellow"
-      : status >= 300
-      ? "cyan"
-      : "green";
+        ? "yellow"
+        : status >= 300
+          ? "cyan"
+          : "green";
   return colors[color](status.toString());
 });
 
 morgan.token("colored-method", (req, res) => {
   const method: HttpVerbs = req.method as HttpVerbs;
   const color: string = REQ_COLORS[method];
-  // this is temporary
   // @ts-expect-error
   return colors[color](method.toString());
 });
@@ -56,7 +55,7 @@ const morganMiddleware = morgan(
   {
     // Stream for morgan logs (you can customize this as needed)
     stream: process.stdout,
-  }
+  },
 );
 
 export default morganMiddleware;

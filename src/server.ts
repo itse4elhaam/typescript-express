@@ -1,7 +1,7 @@
 import express, { Response } from "express";
 import cors from "cors";
 // import apiRoutes from "./routes/index" ;
-import morganMiddleware from "./config/morgan-config";
+import morganMiddleware from "@/config/morgan-config";
 import { cyan } from "colors";
 require("dotenv").config();
 const app = express();
@@ -19,7 +19,7 @@ app.get("/", (req, res: Response) => {
 
 app.listen(port, () => {
   console.log(
-    `Your server is up and running at: ${cyan(`http://localhost:${port}/`)}`
+    `Your server is up and running at: ${cyan(`http://localhost:${port}/`)}`,
   );
 });
 
