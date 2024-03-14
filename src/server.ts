@@ -13,11 +13,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res: Response) => {
-  res.send("Hello from your Maps Api server!");
+  res.send("Hello from your Api server!");
 });
 
 app.listen(port, () => {
-  console.log(`http://localhost:${port}/`);
+  console.log(`Your server is up and runnings at: http://localhost:${port}/`);
 });
 
 // app.use("/api", apiRoutes);
