@@ -1,0 +1,3 @@
+TODOS:
+
+- nodemailer setup

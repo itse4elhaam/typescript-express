@@ -6,6 +6,7 @@ import { cyan } from "colors";
 import "./env";
 import { dbConnect } from "./config/db";
 import { validateData } from "./middlewares";
+import errorHandler from "./middlewares/errorHandler";
 
 async function bootstrapServer() {
   const app = express();
@@ -25,6 +26,7 @@ async function bootstrapServer() {
   });
 
   app.use("/api", apiRoutes);
+  app.use(errorHandler);
 }
 
 bootstrapServer().catch((err: any) => {
